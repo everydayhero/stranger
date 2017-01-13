@@ -18,7 +18,7 @@ export const strangerComp = (styles = {}) =>
           typeof Component !== 'string' && !cancelPassThrough
         const stylesIsFunction = typeof styles === 'function'
         const stylesObj = stylesIsFunction
-          ? styles(rest, traits || rug)
+          ? styles({ props: rest, traits: traits || rug })
           : styles
         const className = newStyles
           ? addRule(stylesObj, newStyles)
