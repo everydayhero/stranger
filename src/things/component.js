@@ -2,7 +2,7 @@ import { PropTypes } from 'react'
 import mapProps from 'recompose/mapProps'
 import getContext from 'recompose/getContext'
 import pipe from 'lodash/fp/pipe'
-import rug from 'rug'
+import rug from 'the-rug'
 import { addRule } from '../'
 
 export const strangerComp = (styles = {}) =>
