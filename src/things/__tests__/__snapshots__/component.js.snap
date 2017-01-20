@@ -1,0 +1,14 @@
+exports[`comp should not remove invalid html tags from native React Components 1`] = `
+Object {
+  "className": "cxsync-2906296101",
+  "notAValidProp": "Noooo!",
+  "styles": Object {
+    "color": "white",
+  },
+}
+`;
+
+exports[`comp should remove invalid html tags from React element based components 1`] = `
+<div
+  className="cxsync-722373509" />
+`;
