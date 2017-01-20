@@ -1,4 +1,5 @@
-import { addRule } from '../../src/index.js'
+/* global describe it expect */
+import { addRule } from '../index.js'
 
 describe('addRule', () => {
   it('should merge 2 objects', () => {
