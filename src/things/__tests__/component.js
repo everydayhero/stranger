@@ -5,28 +5,37 @@ import { shallow } from 'enzyme'
 import comp from '../component.js'
 
 describe('comp', () => {
-  it('should remove invalid html tags from React element based components', () => {
-    const StyledComp = comp(() => ({
-      color: 'red'
-    }))('div')
+  it('should allow removing props from output components to avoid warnings', () => {
+    const StyledComp = comp(({ props }) => ({
+      color: props.color || 'red'
+    }), {
+      removeProps: ['color']
+    })('div')
     const component = renderer.create(
-      <StyledComp notAValidProp='Noooo!' />
+      <StyledComp color='green' />
     )
-    let tree = component.toJSON()
+    const tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   })
 
-  it('should not remove invalid html tags from native React Components', () => {
-    const StyledComp = comp(() => ({
-      color: 'red',
+  it('should remove props even when they come from a native component', () => {
+    const StyledComp = comp(({ props }) => ({
+      color: props.color || 'red',
       backgroundColor: 'blue'
     }))('div')
-    const StyledCompInehrit = comp(() => ({
-      color: 'white'
-    }))(StyledComp)
-    const component = shallow(
-      <StyledCompInehrit notAValidProp='Noooo!' />
+    const StyledCompInehrit = comp(({ props }) => ({
+      backgroundColor: props.black || 'black'
+    }), {
+      removeProps: ['black']
+    })(StyledComp)
+    const componentObj = shallow(
+      <StyledCompInehrit black='white' />
     )
-    expect(component.props()).toMatchSnapshot()
+    const component = renderer.create(
+      <StyledCompInehrit black='white' />
+    )
+    const tree = component.toJSON()
+    expect(componentObj.props()).toMatchSnapshot()
+    expect(tree).toMatchSnapshot()
   })
 })

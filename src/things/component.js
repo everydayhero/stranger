@@ -2,12 +2,11 @@ import { PropTypes } from 'react'
 import mapProps from 'recompose/mapProps'
 import getContext from 'recompose/getContext'
 import pipe from 'lodash/fp/pipe'
-import omit from 'lodash/fp/omit'
+import omit from 'lodash/omit'
 import rug from 'the-rug'
 import { addRule } from '../'
-import validAttr from './reactValidHtmlAttr.js'
 
-export const strangerComp = (styles = {}) =>
+export const strangerComp = (styles = {}, options = {}) =>
   (Component = 'div', cancelPassThrough) => (
     pipe(
       mapProps(props => {
@@ -16,7 +15,6 @@ export const strangerComp = (styles = {}) =>
           styles: existingStyles,
           ...rest
         } = props
-        const componentIsTag = typeof Component === 'string'
         const stylesObj = typeof styles === 'function'
           ? styles({ props: rest, traits: traits || rug })
           : styles
@@ -24,8 +22,8 @@ export const strangerComp = (styles = {}) =>
           ? addRule(stylesObj, existingStyles)
           : addRule(stylesObj)
         return {
-          ...componentIsTag ? omit(rest, validAttr) : rest,
-          ...!componentIsTag && !cancelPassThrough && { styles: stylesObj },
+          ...options.removeProps ? omit(rest, options.removeProps) : rest,
+          ...typeof Component !== 'string' && !cancelPassThrough && { styles: stylesObj },
           className
         }
       }),
