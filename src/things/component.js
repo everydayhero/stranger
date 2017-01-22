@@ -6,8 +6,8 @@ import omit from 'lodash/omit'
 import rug from 'the-rug'
 import { addRule } from '../'
 
-export const strangerComp = (styles = {}, options = {}) =>
-  (Component = 'div', cancelPassThrough) => (
+export const strangerComp = (styles = {}) =>
+  (Component = 'div', options = {}) => (
     pipe(
       mapProps(props => {
         const {
@@ -23,7 +23,7 @@ export const strangerComp = (styles = {}, options = {}) =>
           : addRule(stylesObj)
         return {
           ...options.removeProps ? omit(rest, options.removeProps) : rest,
-          ...typeof Component !== 'string' && !cancelPassThrough && { styles: stylesObj },
+          ...typeof Component !== 'string' && !options.cancelPassStyles && { styles: stylesObj },
           className
         }
       }),

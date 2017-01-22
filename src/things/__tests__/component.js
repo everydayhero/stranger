@@ -8,9 +8,7 @@ describe('comp', () => {
   it('should allow removing props from output components to avoid warnings', () => {
     const StyledComp = comp(({ props }) => ({
       color: props.color || 'red'
-    }), {
-      removeProps: ['color']
-    })('div')
+    }))('div', { removeProps: ['color'] })
     const component = renderer.create(
       <StyledComp color='green' />
     )
@@ -25,9 +23,7 @@ describe('comp', () => {
     }))('div')
     const StyledCompInehrit = comp(({ props }) => ({
       backgroundColor: props.black || 'black'
-    }), {
-      removeProps: ['black']
-    })(StyledComp)
+    }))(StyledComp, { removeProps: ['black'] })
     const componentObj = shallow(
       <StyledCompInehrit black='white' />
     )
