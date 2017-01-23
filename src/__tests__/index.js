@@ -1,4 +1,3 @@
-/* global describe it expect */
 import { addRule } from '../index.js'
 
 describe('addRule', () => {
