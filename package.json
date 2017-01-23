@@ -22,7 +22,12 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "bundle-size": "^1.1.5",
+    "enzyme": "^2.7.0",
     "jest-cli": "^16.0.1",
+    "react": "^15.4.2",
+    "react-addons-test-utils": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-test-renderer": "^15.4.2",
     "rimraf": "^2.5.4"
   },
   "peerDependencies": {

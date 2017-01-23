@@ -2,37 +2,29 @@ import { PropTypes } from 'react'
 import mapProps from 'recompose/mapProps'
 import getContext from 'recompose/getContext'
 import pipe from 'lodash/fp/pipe'
+import omit from 'lodash/omit'
 import rug from 'the-rug'
 import { addRule } from '../'
 
 export const strangerComp = (styles = {}) =>
-  (Component = 'div', cancelPassThrough) => (
+  (Component = 'div', options = {}) => (
     pipe(
       mapProps(props => {
         const {
           traits,
-          styles: newStyles,
+          styles: existingStyles,
           ...rest
         } = props
-        const passThroughStyles =
-          typeof Component !== 'string' && !cancelPassThrough
-        const stylesIsFunction = typeof styles === 'function'
-        const stylesObj = stylesIsFunction
+        const stylesObj = typeof styles === 'function'
           ? styles({ props: rest, traits: traits || rug })
           : styles
-        const className = newStyles
-          ? addRule(stylesObj, newStyles)
+        const className = existingStyles
+          ? addRule(stylesObj, existingStyles)
           : addRule(stylesObj)
-        if (passThroughStyles) {
-          return {
-            ...rest,
-            className: className,
-            styles: stylesObj
-          }
-        }
         return {
-          ...rest,
-          className: className
+          ...options.removeProps ? omit(rest, options.removeProps) : rest,
+          ...typeof Component !== 'string' && !options.cancelPassStyles && { styles: stylesObj },
+          className
         }
       }),
       getContext({ traits: PropTypes.object })
