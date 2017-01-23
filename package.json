@@ -41,7 +41,7 @@
     "recompose": "^0.21.2",
     "the-rug": "^1.0.2"
   },
-  "eslintConfig": {
+  "standard": {
     "env": {
       "jest": true
     }
